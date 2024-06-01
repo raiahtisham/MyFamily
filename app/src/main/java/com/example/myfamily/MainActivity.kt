@@ -40,6 +40,7 @@ class MainActivity : AppCompatActivity() {
 
             true      // Selection in the navigation bar will be shown by true
         }
+        bottomBar.selectedItemId = R.id.nav_home
     }
 
     private fun inflateFragment(newInstance: Fragment) {
