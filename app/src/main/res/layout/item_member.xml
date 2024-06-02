@@ -39,4 +39,143 @@
         app:layout_constraintStart_toEndOf="@id/img_user"
         app:layout_constraintTop_toTopOf="@id/white_card" />
 
+    <TextView
+        android:id="@+id/text_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="16dp"
+        android:text="16:40"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@id/white_card"
+        app:layout_constraintTop_toTopOf="@id/white_card" />
+
+
+    <ImageView
+        android:id="@+id/img_location"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginRight="16dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_location"
+        app:layout_constraintEnd_toStartOf="@id/name_location"
+        app:layout_constraintStart_toEndOf="@id/img_user"
+        app:layout_constraintTop_toBottomOf="@id/name_user" />
+
+    <TextView
+        android:id="@+id/name_location"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        android:elevation="16dp"
+        android:maxLines="4"
+        android:ellipsize="end"
+        android:text="@string/ahtisham_location"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="@id/white_card"
+        app:layout_constraintStart_toEndOf="@id/img_user"
+        app:layout_constraintTop_toBottomOf="@id/name_user" />
+
+    <ImageView
+        android:id="@+id/img_phone"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_margin="16dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_phone"
+        app:layout_constraintBottom_toBottomOf="@id/white_card"
+        app:layout_constraintEnd_toEndOf="@id/white_card" />
+
+    <ImageView
+        android:id="@+id/img_wifi"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="220dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_wifi"
+        app:layout_constraintBottom_toBottomOf="@id/white_card"
+        app:layout_constraintStart_toStartOf="@id/white_card" />
+
+    <TextView
+        android:id="@+id/txt_wifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="16dp"
+        android:text="Wifi"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_wifi"
+        app:layout_constraintStart_toEndOf="@id/img_wifi"
+        app:layout_constraintTop_toTopOf="@id/img_wifi" />
+
+    <ImageView
+        android:id="@+id/img_send"
+        android:layout_width="26dp"
+        android:layout_height="26dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_send"
+        app:layout_constraintBottom_toBottomOf="@id/white_card"
+        app:layout_constraintStart_toStartOf="@id/white_card" />
+
+    <TextView
+        android:id="@+id/txt_send"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="16dp"
+        android:text="223M"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_send"
+        app:layout_constraintStart_toEndOf="@id/img_send"
+        app:layout_constraintTop_toTopOf="@id/img_send"/>
+
+    <ImageView
+        android:id="@+id/img_battery_full"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="12dp"
+        android:layout_marginBottom="12dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_full_battery"
+        app:layout_constraintBottom_toBottomOf="@id/img_phone"
+        app:layout_constraintStart_toStartOf="@id/white_card"
+        app:layout_constraintTop_toTopOf="@id/img_phone"/>
+
+    <TextView
+        android:id="@+id/txt_percentange"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:elevation="16dp"
+        android:text="92%"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@id/img_battery_full"
+        app:layout_constraintStart_toEndOf="@id/img_battery_full"
+        app:layout_constraintTop_toTopOf="@id/img_battery_full"/>
+
+
+    <ImageView
+        android:id="@+id/img_bell"
+        android:layout_width="36dp"
+        android:layout_height="36dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginLeft="6dp"
+        android:elevation="16dp"
+        android:src="@drawable/ic_bell"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
