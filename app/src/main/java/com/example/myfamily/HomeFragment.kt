@@ -5,6 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -20,6 +24,28 @@ class HomeFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val listMembers = listOf<MemberModel>(
+            MemberModel("Ahtisham Ali"),
+            MemberModel("Abdullah Saqib"),
+            MemberModel("Haroon Sidque"),
+            MemberModel("Ahtisham Ali"),
+            MemberModel("Abdullah Saqib"),
+            MemberModel("Haroon Sidque")
+        )
+
+        val adapter = MemberAdapter(listMembers)
+
+        val recycler = requireView().findViewById<RecyclerView>(R.id.recycler_member)
+
+        recycler.layoutManager = LinearLayoutManager(requireContext())
+
+        recycler.adapter = adapter
+
     }
 
     companion object {
