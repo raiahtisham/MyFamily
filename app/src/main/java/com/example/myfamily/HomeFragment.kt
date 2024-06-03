@@ -1,18 +1,26 @@
 package com.example.myfamily
 
 import android.os.Bundle
+import android.provider.ContactsContract
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.d4d5.myfamily.ContactModel
+import com.d4d5.myfamily.InviteAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    private val listContacts: ArrayList<ContactModel> = ArrayList()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,11 +72,61 @@ class HomeFragment : Fragment() {
 
         recycler.adapter = adapter
 
+
+        val inviteAdapter = InviteAdapter(listContacts)
+
+        CoroutineScope(Dispatchers.IO).launch {  // Implementing Threads for fetch contacts faster
+            listContacts.addAll(fetchContacts())
+
+            withContext(Dispatchers.Main){    // Switching to the main thraed after fetching the contacts
+                inviteAdapter.notifyDataSetChanged()
+            }
+        }
+
+        val inviteRecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
+
+        inviteRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
+
+        inviteRecycler.adapter = inviteAdapter
+
+    }
+
+    private fun fetchContacts(): ArrayList<ContactModel> {
+        val cr = requireActivity().contentResolver
+
+        val cursor = cr.query(ContactsContract.Contacts.CONTENT_URI, null, null, null, null)
+
+        val listContacts: ArrayList<ContactModel> = ArrayList()
+
+        cursor?.use {
+            while (it.moveToNext()) {      // Tells whether the next thing is present or not
+                val id = it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts._ID))  // Will fetch colums and ids
+                val name = it.getString(it.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME))
+                val hasPhoneNumber = it.getInt(it.getColumnIndexOrThrow(ContactsContract.Contacts.HAS_PHONE_NUMBER))
+
+                if (hasPhoneNumber > 0) {
+                    val pCur = cr.query(
+                        ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                        null,
+                        "${ContactsContract.CommonDataKinds.Phone.CONTACT_ID} = ?",
+                        arrayOf(id),
+                        null
+                    )
+                    pCur?.use { phoneCursor ->
+                        while (phoneCursor.moveToNext()) {
+                            val phoneNum = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER))
+                            listContacts.add(ContactModel(name, phoneNum))
+                        }
+                    }
+                }
+            }
+        }
+
+        return listContacts
     }
 
     companion object {
         @JvmStatic
         fun newInstance() = HomeFragment()
-
     }
 }
