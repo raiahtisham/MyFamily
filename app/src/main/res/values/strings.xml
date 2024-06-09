@@ -7,4 +7,6 @@
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ahtisham_location">Post Office Nowshera virkan Qasim Pur Tehsil Nowshera Virkan District Gujranwala</string>
+    <string name="continue_with_google">Continue With Google\n</string>
+    <string name="default_web_client_id_auth">665488253521-g3n087ihaculjmv77tsvk26vg3qqjh7e.apps.googleusercontent.com</string>
 </resources>

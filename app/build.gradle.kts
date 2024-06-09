@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -50,10 +51,24 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
     // Room components
-    val room_version = "2.6.1"
+    implementation("androidx.room:room-runtime:2.6.1")
 
-    implementation("androidx.room:room-runtime:$room_version")
-    annotationProcessor("androidx.room:room-compiler:$room_version")
+    annotationProcessor("androidx.room:room-compiler:2.6.1")
 
+    // Use the BoM to manage Firebase library versions
+    implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
+
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation("com.google.firebase:firebase-auth-ktx")
+
+    // Also declare the dependency for the Google Play services library and specify its version
+    implementation("com.google.android.gms:play-services-auth:19.2.0")
+
+    // Firebase Firestore library
+    implementation("com.google.firebase:firebase-firestore-ktx")
+
+    // Google Play services Location library
+    implementation("com.google.android.gms:play-services-location:21.0.1")
 
 }

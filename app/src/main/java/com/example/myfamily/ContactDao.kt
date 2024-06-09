@@ -1,4 +1,4 @@
-package com.d4d5.myfamily
+package com.example.myfamily
 
 import androidx.lifecycle.LiveData
 import androidx.room.Dao

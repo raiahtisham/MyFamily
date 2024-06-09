@@ -1,24 +1,30 @@
 package com.example.myfamily
 
+import android.content.Context
 import android.os.Bundle
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.d4d5.myfamily.ContactModel
-import com.d4d5.myfamily.InviteAdapter
+import com.google.android.material.shadow.ShadowRenderer
+import com.google.firebase.Firebase
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 class HomeFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+
+    lateinit var inviteAdapter: InviteAdapter
+    lateinit var mContext: Context
 
     private val listContacts: ArrayList<ContactModel> = ArrayList()
 
@@ -75,12 +81,13 @@ class HomeFragment : Fragment() {
 
         val inviteAdapter = InviteAdapter(listContacts)
 
-        CoroutineScope(Dispatchers.IO).launch {  // Implementing Threads for fetch contacts faster
-            listContacts.addAll(fetchContacts())
+        fetchDatabaseContacts()
 
-            withContext(Dispatchers.Main){    // Switching to the main thraed after fetching the contacts
-                inviteAdapter.notifyDataSetChanged()
-            }
+        CoroutineScope(Dispatchers.IO).launch {  // Implementing Threads for fetch contacts faster
+
+            insertDatabaseContacts(fetchContacts())
+
+
         }
 
         val inviteRecycler = requireView().findViewById<RecyclerView>(R.id.recycler_invite)
@@ -88,6 +95,38 @@ class HomeFragment : Fragment() {
         inviteRecycler.layoutManager = LinearLayoutManager(requireContext(), LinearLayoutManager.HORIZONTAL, false)
 
         inviteRecycler.adapter = inviteAdapter
+
+        val threeDots = requireView().findViewById<ImageView>(R.id.family_img2)
+
+        threeDots.setOnClickListener{
+
+            SharedPref.putBoolean(PrefConstants.IS_USER_LOGGED_IN, false)
+
+            FirebaseAuth.getInstance().signOut()
+        }
+
+    }
+
+    private fun fetchDatabaseContacts() {
+        val database = MyFamilyDatabase.getDatabase(mContext)
+
+        database.contactDao().getAllContacts().observe(viewLifecycleOwner) {
+
+            Log.d("FetchContact89", "fetchDatabaseContacts: ")
+
+            listContacts.clear()
+            listContacts.addAll(it)
+
+            inviteAdapter.notifyDataSetChanged()
+
+        }
+    }
+
+    private suspend fun insertDatabaseContacts(listContacts: ArrayList<ContactModel>) {
+
+        val database = MyFamilyDatabase.getDatabase(mContext)
+
+        database.contactDao().insertAll(listContacts)
 
     }
 

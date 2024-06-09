@@ -1,11 +1,10 @@
-package com.d4d5.myfamily
+package com.example.myfamily
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.myfamily.R
 
 class InviteAdapter(private val listContacts: List<ContactModel>) :
     RecyclerView.Adapter<InviteAdapter.ViewHolder>() {
