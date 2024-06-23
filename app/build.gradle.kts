@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     alias(libs.plugins.googleAndroidLibrariesMapsplatformSecretsGradlePlugin)
     id("com.google.gms.google-services")
+    id ("kotlin-kapt")
 }
 
 android {
@@ -51,10 +52,9 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.3.9")
 
     // Room components
-    implementation("androidx.room:room-runtime:2.6.1")
-
-    annotationProcessor("androidx.room:room-compiler:2.6.1")
-
+    implementation ("androidx.room:room-ktx:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    androidTestImplementation ("androidx.room:room-testing:2.6.1")
     // Use the BoM to manage Firebase library versions
     implementation(platform("com.google.firebase:firebase-bom:33.1.0"))
 
